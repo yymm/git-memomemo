@@ -60,7 +60,8 @@ def show_memos():
 
 def addTodo(entries):
     todo = Memo.query.filter(Memo.tag == "TODO").first()
-    entries.insert(0, todo)
+    if todo:
+        entries.insert(0, todo)
 
 
 def queryHome():
@@ -75,6 +76,7 @@ def create_memos_dic():
     entries = []
     for memo in memos:
         dic = {}
+        dic['id'] = memo.id
         dic['title'] = memo.title
         dic['basetext'] = memo.text
         dic['text'] = parse_rst(memo.text)
