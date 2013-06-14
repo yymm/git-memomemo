@@ -42,5 +42,13 @@ def add_entry(title, text, tag):
     db_session.commit()
 
 
+def delete_entry(id):
+    from models import Memo
+    memo = Memo.query.filter(Memo.id == id).first()
+    if memo:
+        db_session.delete(memo)
+        db_session.commit()
+
+
 def close_db():
     db_session.remove()
