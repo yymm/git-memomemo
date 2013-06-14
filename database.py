@@ -19,7 +19,7 @@ Base.query = db_session.query_property()
 
 def init_db():
     import models
-    Base.metadata.create_all(bind = engine)
+    Base.metadata.create_all(bind=engine)
 
 
 def add_user(name, password):
@@ -31,6 +31,13 @@ def add_user(name, password):
 
 def delete_user(user):
     db_session.delete(user)
+    db_session.commit()
+
+
+def add_entry(title, text, tag):
+    now = datetime.datetime.today()
+    memo = Memo(title, text, tag, now)
+    db_session.add(memo)
     db_session.commit()
 
 
