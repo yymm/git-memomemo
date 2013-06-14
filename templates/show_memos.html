@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if session.logged_in %}
+<!--Cumulusjs-->
+<script type="text/javascript">
+	var tags = [];
+	{% for tag in tags %}
+	tags.push(new Tag("{{ tag['name'] }}", "{{ tag['size'] }}", "{{ tag['url'] }}"));
+	{% endfor %}
+	var tagCloud = new TagCloud(tags, 350, 350); 
+</script>
+<!--Error-->
+<div>
+	{% if error %}
+	<p class="error">
+	<strong>Error:</strong> {{ error }}
+	{% endif %}
+</div>
+<!--Side Menu-->
+<div class="yano-ui">
+	<!--addentry-div-->
+	<div class="addentry-div">
+   		<img src="{{ url_for('static', filename='png/brush.png') }}">
+		<form action="{{ url_for('add_memo') }}" method="post" onsubmit="return false;">
+			<div class="lock-switch">
+				<input type="checkbox" id="lock-check"></input>
+				<label for="lock-check">
+					<div class="lock-label">|</div>
+				</label>
+			</div>
+   			<dl>
+    		   	<dt>Title:
+    		   	<dd><input type="text" name="title" class="input-text memo-input-title" placeholder="Title">
+    		   	<dt>Text:
+				<dd><textarea name="text" class="memo-input-text" placeholder="Text ( Use reStructuredText, but do not use heading! )"></textarea>
+				<dt>Tag:
+				<dd><input type="text" name="tag" class="input-text memo-input-tag" placeholder="Tag">
+				<dd><input type="button" value="Commit" class="commit-button" onclick="submit();">
+	   		</dl>
+   		</form>
+	</div>
+	<!--search-div-->
+	<div class="search-div">
+		<img src="{{ url_for('static', filename='png/search.png') }}">
+		<form action="{{ url_for('search_memo') }}" method="post">
+			<input type="text", name="title"  placeholder="Title"></input>
+			<input type="text", name="tag" placeholder="Tag"></input>
+			<input type="text", name="date" placeholder="Date <Only Numbers!>"></input>
+			<input type="submit" value="Submit" style="display: none;">
+		</form>
+	</div>
+	<!--cumulonimbus-div-->
+	<div class="cumulonimbus-div">
+		<img src="{{ url_for('static', filename='png/cumulonimbus.png') }}">
+		<div id="tagCloud"></div>
+		<script type="text/javascript">
+			tagCloud.Distribute(document.getElementById("tagCloud")).Animate(); 
+		</script>
+	</div>
+	<!--home-div-->
+	<div class="home-div">
+		<img src="{{ url_for('static', filename='png/home.png') }}">
+		<div>{{ home_html }}</div>
+	</div>
+</div>
+<!--Entry-->
+<div class="entries">
+	<dl class="memo">
+		{% for memo in entries %}
+		<dd class="memo-dd">
+ 			<h1 class="memo-title">{{ memo['title'] }}
+				<var class="memo-date">{{ memo['date_time'] }}</var>
+				<var class="memo-tag">{{ memo['tag'] }}</var>
+    		</h1>
+			<a class="memo-delete" href="{{ url_for('delete_memo') }}?memo-id={{ memo['id'] }}">delete</a>
+			<a class="memo-edit">edit</a>
+			{{ memo['text']|safe }}
+			<p class="memo-title-only" style="display: none;">{{ memo['title'] }}</p>
+			<p class="memo-text" style="display: none;">{{ memo['basetext'] }}</p>
+		</dd>
+  		{% else %}
+   		<dd><em>No memos here, Let's hover left pen-icon!</em>
+		{% endfor %}
+	</dl>
+</div>
+{% endif %}
+{% endblock %}
