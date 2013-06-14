@@ -253,6 +253,9 @@ def search_memo():
 
 if __name__ == '__main__':
     init_db()
+    users = User.query.all()
+    if len(users) == 0:
+        add_user('hoge', 'hoge')
     #app.run(host=os.environ['MEMO_HOST'], port=int(os.environ['MEMO_PORT']))
     # deployment heroku
     app.run()
