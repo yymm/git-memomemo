@@ -66,7 +66,9 @@ def addTodo(entries):
 
 def queryHome():
     home = Memo.query.filter(Memo.tag == "bookmark").first()
-    return parse_rst(home.text)
+    if home:
+        return parse_rst(home.text)
+    return None
 
 
 def create_memos_dic():
