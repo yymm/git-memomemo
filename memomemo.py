@@ -24,7 +24,7 @@ import rst_directive
 from sqlalchemy import and_
 
 # Configuration
-#DEBUG = True
+DEBUG = True
 SECRET_KEY = 'development key'
 
 app = Flask(__name__)
