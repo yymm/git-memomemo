@@ -253,4 +253,6 @@ def search_memo():
 
 if __name__ == '__main__':
     init_db()
-    app.run(host=os.environ['MEMO_HOST'], port=int(os.environ['MEMO_PORT']))
+    #app.run(host=os.environ['MEMO_HOST'], port=int(os.environ['MEMO_PORT']))
+    # deployment heroku
+    app.run()
