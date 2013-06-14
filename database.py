@@ -35,6 +35,7 @@ def delete_user(user):
 
 
 def add_entry(title, text, tag):
+    from models import Memo
     now = datetime.datetime.today()
     memo = Memo(title, text, tag, now)
     db_session.add(memo)
