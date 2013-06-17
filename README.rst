@@ -1,3 +1,7 @@
+Heroku
+------
+`MemoMemo <http://memomemo.herokuapp.com/>`_
+
 Original Repos
 --------------
 `yymm / MemoMemo — Bitbucket <https://bitbucket.org/yymm/memomemo>`_
